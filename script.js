@@ -47,3 +47,99 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 });
 
 
+//check darkmode
+// if (localStorage.getItem('dark-Mode') === 'enabled') {
+//     document.body.classList.add('darkmode');
+//     document.getElementById('darkness').textContent = "Switch to Light";
+// }
+
+// function darkness() {
+//     const body = document.body;
+//     const button = document.getElementById('darkness');
+
+//     body.classList.toggle('darkmode');
+
+//     //save preferences
+//     if (body.classList.contains('darkmode')) {
+//         localStorage.setItem('dark-Mode', 'enabled');
+//         button.textContent = "Light";
+//     } else {
+//         localStorage.setItem('dark-Mode', 'disabled');
+//         button.textContent = "Darkness";
+//     }
+// }
+
+let pointMult = 1
+let scoreReqMult = 10
+
+function clicker() {
+  if (localStorage.getItem('active') != 'true'){
+    localStorage.setItem('points',0)
+    localStorage.setItem('pointMult',1)
+    localStorage.setItem('scoreReqMult',10)
+    localStorage.setItem('multCount',0)
+    console.log(localStorage.getItem('points'))
+    var pointValue = 0
+    var pointMult = 1
+  }
+  else{
+    var pointValue = Number(localStorage.getItem('points'))
+    var pointMult = Number(localStorage.getItem('pointMult'))
+  }
+  localStorage.setItem('active','true')
+  pointValue += pointMult
+  console.log(localStorage.getItem('points'))
+  localStorage.setItem('points',pointValue)
+  document.getElementById("clicker").innerHTML = Math.ceil(pointValue*100)/100
+}
+
+function reset() {
+  localStorage.setItem('points',0)
+  localStorage.setItem('pointMult',1)
+  localStorage.setItem('scoreReqMult',10)
+  localStorage.setItem('multCount',0)
+  document.getElementById("clicker").innerHTML = "Start"
+  multText(0,10,1)
+}
+
+function multiplier() {
+  let tempPoints = Number(localStorage.getItem('points'))
+  let scoreReqMult = Number(localStorage.getItem('scoreReqMult'))
+  let pointMult = Number(localStorage.getItem('pointMult'))
+  let multCount = Number(localStorage.getItem('multCount'))
+  error = setTimeout(multError,500)
+  if (tempPoints > scoreReqMult) {
+    pointMult += 0.1
+    tempPoints += -scoreReqMult
+    localStorage.setItem('points',tempPoints)
+    scoreReqMult = scoreReqMult*1.5
+    localStorage.setItem('scoreReqMult', scoreReqMult)
+    localStorage.setItem('pointMult',pointMult)
+    multCount += 1
+    localStorage.setItem('multCount',multCount)
+    multText(multCount,scoreReqMult,pointMult)
+    document.getElementById("clicker").innerHTML = Math.ceil(tempPoints*100)/100
+  }
+  else {
+    document.getElementById("mult").innerHTML = "Not enough points"
+    multError(multCount,scoreReqMult,pointMult)
+
+  }
+}
+
+function multError(multCount,scoreReqMult,pointMult) {
+    multText(multCount,scoreReqMult,pointMult)
+    document.getElementById("clicker").innerHTML = Math.ceil(tempPoints*100)/100
+}
+
+function fetchVal(object) {
+  return Number(localStorage.getItem(object))
+}
+
+function changeVal(object,value) {
+  localStorage.setItem(object,value)
+}
+
+function multText(multCount,scoreReqMult,pointMult) {
+  document.getElementById("mult").innerHTML = `Multipliers: ${multCount}<br>Cost: ${Math.ceil(scoreReqMult*100)/100} points<br>Effect: ${Math.ceil(pointMult*10)/10}`
+}
