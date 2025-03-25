@@ -47,3 +47,24 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 });
 
 
+//check darkmode
+if (localStorage.getItem('dark-Mode') === 'enabled') {
+    document.body.classList.add('darkmode');
+    document.getElementById('darkness').textContent = "Switch to Light";
+}
+
+function darkness() {
+    const body = document.body;
+    const button = document.getElementById('darkness');
+
+    body.classList.toggle('darkmode');
+
+    //save preferences
+    if (body.classList.contains('darkmode')) {
+        localStorage.setItem('dark-Mode', 'enabled');
+        button.textContent = "Light";
+    } else {
+        localStorage.setItem('dark-Mode', 'disabled');
+        button.textContent = "Darkness";
+    }
+}

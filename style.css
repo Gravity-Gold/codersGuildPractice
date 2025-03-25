@@ -121,3 +121,35 @@ form button:hover {
 }
 
 
+/* darkmode */
+body.darkmode {
+    background-color: black;
+    color: #f4f4f4;
+}
+
+body.darkmode button {
+    background-color: black;
+    color: #333;
+}
+
+body.darkmode button:hover {
+    background-color: #ccc;
+}
+
+header.darkmode {
+    background-color: white;
+    color: #333;
+}
+
+section.darkmode {
+  background-color: black;
+  color: white;
+}
+
+section.container.darkmode{
+  background-color: black;
+}
+
+container.darkmode {
+  background-color: black;
+}
